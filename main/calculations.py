@@ -72,8 +72,8 @@ class SiteDownChecker:
                 r = requests.get(self.url, headers={
                     'User-Agent': 'Mozilla/4.0 (compatible; MSIE 9.0; Windows NT 6.1)'})
             if SiteToCheck.objects.filter(url=self.url, user=self.user).exists():
-                self.modify_url_success(proxy, r)
-                return self.saveData(r)
+                self.saveData()
+                return self.modify_url_success(proxy, r)
 
             else:
                 return self.create_new_url_success(proxy, r)
@@ -147,7 +147,7 @@ class SiteDownChecker:
         obj.save()
         return data
 
-    def saveData(self, r):
+    def saveData(self):
         obj = SiteToCheck.objects.get(url=self.url, user=self.user)
         url = obj.url
         last_status = obj.last_status
