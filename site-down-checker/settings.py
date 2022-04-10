@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
-from .settings_secret import *
+
+os.environ.get("DJANGO_SECRET")
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 from django.contrib import messages
@@ -23,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # Application definition
 
@@ -88,18 +89,18 @@ DATABASES = {
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    # },
 ]
 
 # Internationalization
@@ -143,12 +144,12 @@ CONSTANCE_CONFIG = {
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
 
 # Django secret_settings.py
-# ALLOWED_HOSTS = ['']
-# SECRET_KEY = ''
-#
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+SECRET_KEY = '123'
+
 # EMAIL_HOST = ''
 # EMAIL_PORT =
-# EMAIL_HOST_USER = ''
-# EMAIL_ADDRESS = ''
-# EMAIL_HOST_PASSWORD = ''
-# TO_EMAIL = ''
+EMAIL_HOST_USER = 'egor'
+EMAIL_ADDRESS = 'egorslawko@gmai.com'
+EMAIL_HOST_PASSWORD = 'egor'
+TO_EMAIL = 'egorslawko@gmai.com'

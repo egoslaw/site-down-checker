@@ -2,6 +2,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" href="{%  static 'images/favicon.ico' %}">
+
+    <h1 id="site-name">
+        <a href="{% url 'index' %}">
+            <img class='logo'  src="{% static 'images/invalid.jpeg' %}" height="50px">
+        </a>
+    </h1>
+
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %} </title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
@@ -19,9 +27,9 @@
 <body>
 <div class="container-fluid">
 <div class="h1-title">
-    <h1 class="display-1"><a class="display-1 title" href="{% url 'index' %}">Url up-down checker</a></h1>
-    <p>by <a href="#">jundymek</a></p>
-    <p>visit me on <a href="https://github.com/jundymek"><i class="fab fa-github fa-2x"></i></a></p>
+    <h1 class="display-1"><a class="display-1 title" href="{% url 'index' %}">up-down </a></h1>
+    <p></p>
+    <p></p>
 </div>
 {% block body %} {% endblock %}
 </div>
