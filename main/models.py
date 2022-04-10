@@ -4,6 +4,14 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
+class Data(models.Model):
+    url = models.URLField(max_length=100)
+    bad_data = models.TextField(blank=True)
+    last_status = models.IntegerField(blank=True, null=True)
+    last_response_time = models.FloatField(blank=True, null=True)
+    last_check = models.DateTimeField(blank=True, null=True)
+
+
 class SiteToCheck(models.Model):
     url = models.URLField(max_length=100)
     user = models.CharField(max_length=100, default='Admin')
@@ -14,6 +22,9 @@ class SiteToCheck(models.Model):
 
     def __str__(self):
         return self.url
+
+
+
 
 
 # class Profile(models.Model):

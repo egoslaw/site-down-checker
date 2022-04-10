@@ -10,6 +10,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 
 from .models import SiteToCheck
+from .models import Data
 
 
 def send_email(message, email):
@@ -71,7 +72,9 @@ class SiteDownChecker:
                 r = requests.get(self.url, headers={
                     'User-Agent': 'Mozilla/4.0 (compatible; MSIE 9.0; Windows NT 6.1)'})
             if SiteToCheck.objects.filter(url=self.url, user=self.user).exists():
-                return self.modify_url_success(proxy, r)
+                self.modify_url_success(proxy, r)
+                return self.saveData(r)
+
             else:
                 return self.create_new_url_success(proxy, r)
         except Exception as e:
@@ -125,7 +128,6 @@ class SiteDownChecker:
                                    last_status=data['last_status'],
                                    last_response_time=data['last_response_time'],
                                    last_check=data['last_check'])
-
         return data
 
     def modify_url_success(self, proxy, r):
@@ -143,5 +145,19 @@ class SiteDownChecker:
                     "%Y-%m-%d %H:%M")) + f": last status different than 200: {data['last_status']}"
         obj.last_check = datetime.now().strftime("%Y-%m-%d %H:%M")
         obj.save()
-        data['last_check'] = datetime.now().strftime("%Y-%m-%d %H:%M")
         return data
+
+    def saveData(self, r):
+        obj = SiteToCheck.objects.get(url=self.url, user=self.user)
+        url = obj.url
+        last_status = obj.last_status
+        bad_data = obj.bad_data
+        last_response_time = obj.last_response_time
+        last_check = obj.last_check
+        Data.objects.create(url=self.url,
+                            last_status=last_status,
+                            last_response_time=last_response_time,
+                            last_check=last_check,
+                            bad_data =bad_data)
+
+        return obj.last_status
