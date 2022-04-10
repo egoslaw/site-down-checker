@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import SiteToCheckForm, MyUserCreationForm
 from .models import SiteToCheck
 from .calculations import SiteDownChecker, modify_email
+from .models import Data
 
 
 def login_view(request):
@@ -71,15 +72,21 @@ def index(request):
 def url_details(request, pk):
     url = get_object_or_404(SiteToCheck, pk=pk, user=request.user)
     if request.GET.get('check_btn'):
+        # TODO: переделать all_Data
+        all_Data = Data.objects.filter(url__exact=url)
+        for item in all_Data:
+            print(item.url)
         data = SiteDownChecker(url, user=request.user).status()
         success_message_text = f"{url} Status: {data['last_status']}, Response time: {data['last_response_time']}"
         messages.success(request, success_message_text)
         refreshed_url = get_object_or_404(SiteToCheck, pk=pk, user=request.user)
         bad_data = refreshed_url.bad_data.splitlines()
-        return render(request, 'details.html', {'url': url, 'bad_data': bad_data})
+        return render(request, 'details.html', {'url': url, 'bad_data': bad_data, 'all_Data': all_Data})
     else:
+        all_Data = Data.objects.filter(url__exact=url)
+
         bad_data = url.bad_data.splitlines()
-        return render(request, 'details.html', {'url': url, 'bad_data': bad_data})
+        return render(request, 'details.html', {'url': url, 'bad_data': bad_data, 'all_Data': all_Data}, )
 
 
 @login_required
@@ -115,3 +122,7 @@ def modify_settings(request):
             else:
                 config.PROXY = True
     return redirect('/')
+
+# date
+# status code
+#

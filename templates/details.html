@@ -58,11 +58,22 @@
                 </div>
             </div>
         </div>
+
+        {% for item in all_Data %}
+            <table class="table">
+            <tr>
+                <td>{{ item.last_check }}</td>
+                <td>{{ item.last_status }}</td>
+            </tr>
+            <table >
+        {% endfor %}
+
         {% if bad_data %}
             <br>
             <div class="row">
                 <div class="col-md-12">
-                    <table data-toggle="table" data-sort-name="date" data-sort-order="desc" data-pagination="true"
+                    <table data-toggle="table" data-sort-name="date" data-sort-order="desc"
+                           data-pagination="true"
                            data-query-params="queryParams">
                         <thead>
                         <tr>
